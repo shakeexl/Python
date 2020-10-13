@@ -1,36 +1,57 @@
 # Новиков Роман
 # Задание 4
-# Создать (не программно) текстовый файл со следующим содержимым:
-# One — 1
-# Two — 2
-# Three — 3
-# Four — 4
-# Необходимо написать программу, открывающую файл на чтение и считывающую построчно данные.
-# При этом английские числительные должны заменяться на русские.
-# Новый блок строк должен записываться в новый текстовый файл.
+# Реализуйте базовый класс Car. У данного класса должны быть следующие атрибуты: speed, color, name, is_police (булево).
+# А также методы: go, stop, turn(direction), которые должны сообщать, что машина поехала, остановилась, повернула (куда).
+# Опишите несколько дочерних классов: TownCar, SportCar, WorkCar, PoliceCar. Добавьте в базовый класс метод show_speed,
+# который должен показывать текущую скорость автомобиля. Для классов TownCar и WorkCar переопределите метод show_speed.
+# При значении скорости свыше 60 (TownCar) и 40 (WorkCar) должно выводиться сообщение о превышении скорости.
+# Создайте экземпляры классов, передайте значения атрибутов. Выполните доступ к атрибутам, выведите результат.
+# Выполните вызов методов и также покажите результат.
 
-f = 'test_4.txt'
+class Car:
+    def __init__(self, car_color, car_speed, car_name, car_is_police):
+        self.color = car_color
+        self.speed = car_speed
+        self.name = car_name
+        self.is_police = car_is_police
 
-f_obj = open(f)
+    def go(self):
+        print('Машина поехала')
 
-translate = {'One': 'Один', 'Two': 'Два', 'Three': 'Три', 'Four': 'Четыре'}
-my_list = []
+    def stop(self):
+        print('Машина остановилась')
 
-for i in f_obj:
-    i = i.split(' ', 1)
-    my_list.append(translate[i[0]] + ' ' + i[1])
-
-f_obj.close()
-
-f_2 = open('test_4_2.txt', 'w')
-for i in my_list:
-    f_2.writelines(i)
-f_2.close()
-
-with open('test_4_2.txt', 'r') as f_2:
-    print(f_2.read())
-f_2.close()
+    def turn(self, direction):
+        print('Машина повернула', direction)
 
 
+class TownCar(Car):
+    def show_speed(self):
+        if self.speed > 60:
+            print('Превышение скорости! Скорость автомобиля равна', self.speed)
+        else:
+            print('Скорость автомобиля равна', self.speed)
 
 
+class SportCar(Car):
+    def show_speed(self):
+        print('Скорость автомобиля равна', self.speed)
+
+
+class WorkCar(Car):
+    def show_speed(self):
+        if self.speed > 40:
+            print('Превышение скорости! Скорость автомобиля равна', self.speed)
+        else:
+            print('Скорость автомобиля равна', self.speed)
+
+
+class PoliceCar(Car):
+    def show_speed(self):
+        print('Скорость автомобиля равна', self.speed)
+
+
+my_workcar = WorkCar('Желтый', 60, 'Трактор', False)
+my_workcar.go()
+my_workcar.show_speed()
+print(my_workcar.is_police)

@@ -1,16 +1,34 @@
 # Новиков Роман
 # Задание 5
-# Создать (программно) текстовый файл, записать в него программно набор чисел, разделенных пробелами.
-# Программа должна подсчитывать сумму чисел в файле и выводить ее на экран.
+# Реализовать класс Stationery (канцелярская принадлежность). Определить в нем атрибут title (название) и
+# метод draw (отрисовка). Метод выводит сообщение “Запуск отрисовки.” Создать три дочерних класса Pen (ручка),
+# Pencil (карандаш), Handle (маркер). В каждом из классов реализовать переопределение метода draw.
+# Для каждого из классов методы должен выводить уникальное сообщение. Создать экземпляры классов и проверить,
+# что выведет описанный метод для каждого экземпляра.
 
-f = open('test_5.txt', 'w')
-numbers = input('Вводите числа через пробел: ').split(' ')
-for i in numbers:
-    f.writelines(i + ' ')
-f.close()
+class Stationery:
+    def __init__(self, stationery_title):
+        self.title = stationery_title
 
-with open('test_5.txt', 'r') as f_2:
-    new_numbers = f_2.readline().split()
-    print(sum(map(int, new_numbers)))
-f_2.close()
+    def draw(self):
+        print('Запуск отрисовки.')
 
+
+class Pen(Stationery):
+    def draw(self):
+        print('Рисуем ручкой...')
+
+
+class Pencil(Stationery):
+    def draw(self):
+        print('Рисуем карандашом...')
+
+
+class Handle(Stationery):
+    def draw(self):
+        print('Рисуем маркером...')
+
+
+my_pen = Pen('Синяя ручка')
+print(my_pen.title)
+my_pen.draw()

@@ -1,21 +1,51 @@
 # Новиков Роман
 # Задание 2
-# Реализовать класс Road (дорога), в котором определить атрибуты: length (длина), width (ширина).
-# Значения данных атрибутов должны передаваться при создании экземпляра класса. Атрибуты сделать защищенными.
-# Определить метод расчета массы асфальта, необходимого для покрытия всего дорожного полотна. Использовать формулу:
-# длина*ширина*масса асфальта для покрытия одного кв метра дороги асфальтом, толщиной в 1 см*число см толщины полотна.
-# Проверить работу метода.
-# Например: 20м*5000м*25кг*5см = 12500 т
+# Реализовать проект расчета суммарного расхода ткани на производство одежды. Основная сущность (класс) этого проекта —
+# одежда, которая может иметь определенное название. К типам одежды в этом проекте относятся пальто и костюм.
+# У этих типов одежды существуют параметры: размер (для пальто) и рост (для костюма). Это могут быть обычные числа:
+# V и H, соответственно.
+# Для определения расхода ткани по каждому типу одежды использовать формулы: для пальто (V/6.5 + 0.5),
+# для костюма (2*H + 0.3). Проверить работу этих методов на реальных данных.
+# Реализовать общий подсчет расхода ткани. Проверить на практике полученные на этом уроке знания: реализовать
+# абстрактные классы для основных классов проекта, проверить на практике работу декоратора @property.
 
-class Road:
-    def __init__(self, road_length, road_width):
-        self._length = road_length
-        self._width = road_width
+from abc import ABC, abstractmethod
 
-    def mass(self):
-        m = int((self._length * self._width * 25 * 5) / 1000)
-        print(m)
 
-my_road = Road(20, 5000)
-my_road.mass()
+class Clothes(ABC):
+    @abstractmethod
+    def __init__(self, parameter):
+        self.parameter = parameter
 
+    @abstractmethod
+    def consumption(self):
+        pass
+
+
+class Coat(Clothes):
+    def __init__(self, parameter):
+        self.parameter = parameter
+
+    @property
+    def consumption(self):
+        result = (self.parameter / 6.5) + 0.5
+        return round(result, 2)
+
+
+class Suit(Clothes):
+    def __init__(self, parameter):
+        self.parameter = parameter
+
+    @property
+    def consumption(self):
+        result = (2 * self.parameter) + 0.3
+        return round(result, 2)
+
+
+my_coat = Coat(54.1234)
+print(my_coat.consumption)
+
+my_suit = Suit(175.96)
+print(my_suit.consumption)
+
+print('Общий расход:', my_coat.consumption + my_suit.consumption)
